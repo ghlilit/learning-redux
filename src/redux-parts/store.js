@@ -25,7 +25,7 @@ const createStore = (reducer) => {
          case 'INCREMENT':
             return state + 1; 
          case 'DECREMENT':
-            return state + 1; 
+            return state - 1; 
          default:
             return state;
      }
@@ -38,12 +38,6 @@ const subscriber = () => {
 }
 
 const unsib = store.subscribe(subscriber);
-
-store.dispatch({type: 'INCREMENT'});
-store.dispatch({type: 'INCREMENT'});
-
 unsib();
-console.log(store.getState());
 
-store.dispatch({type: 'INCREMENT'});
-store.dispatch({type: 'INCREMENT'});
+export default store;
