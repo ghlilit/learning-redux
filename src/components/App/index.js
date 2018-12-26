@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import store from '../../redux-parts'
+require("../../reducers/todos")
 
 class App extends Component {
   render() {
