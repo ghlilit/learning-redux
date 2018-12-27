@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import store from '../../store'
-import FilterLink from '../FilterLink'
+import Footer from '../Footer'
 import TodoList from '../TodoList';
+import AddTodo from '../AddTodo'
 
 const getVisibleTodos = (todos, filter) => {
   switch (filter) {
@@ -17,59 +18,28 @@ const getVisibleTodos = (todos, filter) => {
   }
 }
 
+
 let nextId = 0;
-class App extends Component {
-  render() {
-    const {todos, visibilityFilter} = this.props;
-    let visibleTodos = getVisibleTodos(
-      todos,
-      visibilityFilter);
-    return (
-      <div className="App">
-      <input
-      ref = {node => this.input = node}/>
-        <button onClick = {() => {store.dispatch({
-              type: 'ADD_TODO',
-              text: this.input.value,
-              id: nextId ++
-            });
-              this.input.value = '';
-          }
-          }>Add to do
-          </button>
-          <ul>
-            <TodoList todos = {visibleTodos}
-             onTodoClick = {id => {
-               store.dispatch({
-                 type: 'TOGGLE_TODO',
-                 id
-               })
-             }}/>
-          </ul>
-          <p>
-            Show:
-            {' '}
-            <FilterLink
-              visibilityFilter = {visibilityFilter}
-              filter = 'SHOW_ALL'>
-                All
-            </FilterLink>
-                  {' '}
-            <FilterLink
-              visibilityFilter = {visibilityFilter}
-              filter = 'SHOW_ACTIVE'>
-                Active
-            </FilterLink>
-                  {' '}
-            <FilterLink
-              visibilityFilter = {visibilityFilter}
-              filter = 'SHOW_COMPLETED'>
-                Completed
-            </FilterLink>
-          </p>
-      </div>
-    );
-  }
-}
+const App = ({todos, visibilityFilter}) => 
+  <div className="App">
+    <ul>
+      <AddTodo onClick = {text => store.dispatch({
+        type: 'ADD_TODO',
+        id: nextId ++,
+        text,
+      })} />
+      <TodoList todos = {
+        getVisibleTodos(
+          todos,
+          visibilityFilter)}
+        onTodoClick = {id => {
+          store.dispatch({
+            type: 'TOGGLE_TODO',
+            id
+          })
+        }}/>
+    </ul>
+    {/* //<Footer/> */}
+  </div>
 
 export default App;
