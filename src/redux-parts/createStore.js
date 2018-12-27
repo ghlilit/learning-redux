@@ -19,25 +19,3 @@ const createStore = (reducer) => {
      dispatch({});
      return {getState, dispatch, subscribe};
  }
-
- const counter = (state = 0, action) => {
-     switch(action.type){
-         case 'INCREMENT':
-            return state + 1; 
-         case 'DECREMENT':
-            return state - 1; 
-         default:
-            return state;
-     }
- }
-
-const store = createStore(counter);
-
-const subscriber = () => {
-    console.log("subscriber");
-}
-
-const unsib = store.subscribe(subscriber);
-unsib();
-
-export default store;
