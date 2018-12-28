@@ -1,26 +1,14 @@
 import React from 'react'
+import Todo from './Todo'
 
-const Todo = ({text, completed, onChange}) => {
-    return (
-      <ul>
-          <input type = "radio" 
-          onClick = {onChange}
-          checked = {completed && true}
-          />
-          {text}
-        </ul>
-    )
-  }
-  
-
-const TodoList = ({todos = [], onTodoClick}) => {
+const TodoList = ({todos, onTodoClick}) => {
   return (
     <ul>
       {todos.map(todo => 
         <Todo 
             key = {todo.id}
             onChange = {() => onTodoClick(todo.id)}
-                {...todo}/>
+            {...todo}/>
       )}
     </ul>
   )
