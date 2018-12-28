@@ -13,7 +13,7 @@ const Todo = ({text, completed, onChange}) => {
   }
   
 
-const TodoList = ({todos, onTodoClick}) => {
+const TodoList = ({todos = [], onTodoClick}) => {
   return (
     <ul>
       {todos.map(todo => 
