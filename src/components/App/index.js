@@ -4,10 +4,10 @@ import Footer from '../Footer'
 import VisibleTodos from '../VisibleTodos';
 import AddTodo from '../AddTodo'
 
-const App = ( {location} ) => 
+const App = () => 
   <div className="App">
       <AddTodo />
-      <VisibleTodos filter = {location.pathname.substr(1) || 'all'}/>
+      <VisibleTodos />
     <Footer/>
   </div>
 

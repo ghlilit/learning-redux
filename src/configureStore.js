@@ -1,18 +1,30 @@
 import { createStore } from 'redux'
 import rootReducer from './reducers'
-import { loadState, saveState } from './localStorage'
-import throttle from 'lodash/throttle'
 
 const configureStore = () => {
-    let persistedState = {
-        todos: loadState()
-    }
-    const store = createStore(rootReducer, persistedState);
-    
-    store.subscribe(throttle(() => {
-        saveState(store.getState().todos);
-    }), 1000)
 
+    const addLoggingToDispatch = (store) => {
+        const rawDispatch = store.dispatch;
+        if(!console.group){
+            return rawDispatch;
+        }
+        return (action) => {
+            console.group(action.type)
+            console.log('%c prev state', 'color: red', store.getState());
+            console.log(action)
+            const returnValue = rawDispatch(action);
+            console.log('%c next state', 'color: red', store.getState())
+            console.groupEnd(action.type)
+            console.log(returnValue)
+        }
+    }
+
+    const store = createStore(rootReducer);
+
+    if(process.env.NODE_ENV !== 'production'){
+        store.dispatch = addLoggingToDispatch(store);
+    }
+    
     return store;
 }
 
