@@ -2,7 +2,7 @@ const byId = (state = {}, action) => {
     switch (action.type) {
         case 'RECEIVE_TODOS':
             const nextState = {...state};
-            action.response.forEach(todo => {
+            action.todos.forEach(todo => {
                 nextState[todo.id] = todo;
             });
             return nextState;
@@ -13,4 +13,4 @@ const byId = (state = {}, action) => {
 
 export default byId; 
 
-export const getTodo = (state, id) => state[id]
+export const getTodo = (state, id) => state.byId[id]

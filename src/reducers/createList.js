@@ -5,7 +5,7 @@ const createList = (filter) => {
         }
         switch(action.type){
             case 'RECEIVE_TODOS': 
-                return action.response.map(todo => todo.id)
+                return action.todos.map(todo => todo.id)
             default:
                 return state;
         }

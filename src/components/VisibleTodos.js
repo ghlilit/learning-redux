@@ -20,7 +20,7 @@ class VisibleTodos extends Component {
   
    fetchData(){
      const { filter, fetchTodos} = this.props;
-      // fetchTodos(filter);
+       fetchTodos(filter);
    }
 
   render() {
@@ -37,7 +37,7 @@ class VisibleTodos extends Component {
   const mapStateToProps = (state, {location}) => {
     const filter = location.pathname.substr(1) || 'all';
     return {
-        todos: getVisibleTodos(state, filter),
+        todos: getVisibleTodos(state, filter) || [],
         filter
     }
   }

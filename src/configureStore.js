@@ -1,30 +1,16 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import promise from 'redux-promise';
+import logger from 'redux-logger'
 import rootReducer from './reducers'
 
 const configureStore = () => {
 
-    const addLoggingToDispatch = (store) => {
-        const rawDispatch = store.dispatch;
-        if(!console.group){
-            return rawDispatch;
-        }
-        return (action) => {
-            console.group(action.type)
-            console.log('%c prev state', 'color: red', store.getState());
-            console.log(action)
-            const returnValue = rawDispatch(action);
-            console.log('%c next state', 'color: red', store.getState())
-            console.groupEnd(action.type)
-            console.log(returnValue)
-        }
-    }
-
-    const store = createStore(rootReducer);
-
+    const middlewares = [promise];
     if(process.env.NODE_ENV !== 'production'){
-        store.dispatch = addLoggingToDispatch(store);
+        middlewares.push(logger)
     }
     
+    const store = createStore(rootReducer, applyMiddleware(...middlewares));
     return store;
 }
 

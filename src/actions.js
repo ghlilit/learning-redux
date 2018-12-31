@@ -18,9 +18,7 @@ const receiveTodos = (filter, todos) => ({
     filter
 })
 
-export const fetchTodos = (filter) => {
+export const fetchTodos = (filter) => 
     api.fetchTodos(filter)
     .then(res => receiveTodos(filter, res)
     );
-    
-}
